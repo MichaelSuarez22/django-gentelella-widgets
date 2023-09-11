@@ -16,18 +16,35 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.auth.models import Permission
 from django.urls import path, include
 
 from demoapp.urls import urlpatterns as demourls
+from demoapp.views import PermissionDetail, RelatedPermissionList
 from djgentelella.urls import urlpatterns as djgentelellaurls
 from .dashboad import show_top_counts
 from .views import home, logeado, add_view_select
 
-urlpatterns = djgentelellaurls + [
-    path('admin/', admin.site.urls),
-    path('', home, name="home"),
-    path('logueado', logeado),
-    path('dashboard', show_top_counts, name='dashboard'),
-    path('add_view_select', add_view_select, name='add_view_select'),
-    path('blog/', include('djgentelella.blog.urls')),
-] + demourls + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns = (
+    djgentelellaurls +
+    [
+        path('admin/', admin.site.urls),
+        path('', home, name="home"),
+        path('logueado', logeado),
+        path('dashboard', show_top_counts, name='dashboard'),
+        path('add_view_select', add_view_select, name='add_view_select'),
+        path('blog/', include('djgentelella.blog.urls')),
+    ] +
+    demourls +
+    static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) +
+    [
+        # path('api/permissions/', PermissionDetail.as_view(), name='permission-list'),
+        path('permissions/<int:pk>/', PermissionDetail.as_view(),
+             name='permission-detail'),
+        # path('permissions/<int:pk>/related/', RelatedPermissionList.as_view(),
+        #      name='related-permission-list'),
+        path('related_permissions/<int:pk>/', RelatedPermissionList.as_view(),
+             name='related-permissions-list'),
+
+    ]
+)

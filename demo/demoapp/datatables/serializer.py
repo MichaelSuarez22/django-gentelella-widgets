@@ -8,7 +8,7 @@ from rest_framework.exceptions import ValidationError
 from demoapp.models import Person, Country
 from djgentelella.fields.drfdatetime import DateRangeTextWidget, DateTimeRangeTextWidget
 from djgentelella.serializers import GTDateField, GTDateTimeField
-
+from django.contrib.auth.models import CustomPermission
 
 class PersonFilterSet(FilterSet):
     born_date = DateFromToRangeFilter(
@@ -83,3 +83,16 @@ class PersonUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Person
         fields = "__all__"
+
+
+
+class CustomPermissionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomPermission
+        fields = '__all__'
+
+
+class PermissionSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    name = serializers.CharField()
+

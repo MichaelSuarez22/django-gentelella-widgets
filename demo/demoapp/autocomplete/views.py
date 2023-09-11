@@ -1,5 +1,5 @@
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, UpdateView, ListView
+from django.views.generic import CreateView, UpdateView, ListView, DeleteView
 
 from demoapp import models
 from . import forms
@@ -18,6 +18,12 @@ class PeopleGroupChange(UpdateView):
     form_class = forms.PeopleGroupForm
     template_name = 'gentelella/index.html'
 
+    class PeopleGroupDelete(DeleteView):
+        model = models.PeopleGroup
+        success_url = reverse_lazy('pgroup-list')
+        form_class = forms.PeopleGroupForm
+        template_name = 'gentelella/index.html'
+
 
 class PeopleGroupList(ListView):
     model = models.PeopleGroup
@@ -29,6 +35,7 @@ class ABCDECreate(CreateView):
     form_class = forms.ABCDEGroupForm
     success_url = reverse_lazy('abcde-list')
     template_name = 'gentelella/index.html'
+
 
 
 class ABCDEChange(UpdateView):

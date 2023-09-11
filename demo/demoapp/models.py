@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
@@ -223,3 +223,19 @@ class Event(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class PermissionRelation(models.Model):
+    main_permission = models.ForeignKey(Permission, on_delete=models.CASCADE, related_name='related_permissions')
+    dependent_permission = models.ForeignKey(Permission, on_delete=models.CASCADE, related_name='dependent_permissions')
+
+
+
+
+class CustomPermissionRelationship(models.Model):
+    source_permission = models.ForeignKey(Permission, related_name='related_custom_permissions', on_delete=models.CASCADE)
+    related_permission = models.ForeignKey(Permission, on_delete=models.CASCADE)
+
+
+# class CustomPermission(models.Model):
+#     name = models.CharField(max_length=255)

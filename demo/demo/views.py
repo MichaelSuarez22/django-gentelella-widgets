@@ -7,7 +7,7 @@ from djgentelella.forms.forms import GTForm
 from djgentelella.widgets import core as genwidgets
 from djgentelella.widgets import numberknobinput as knobwidget
 from djgentelella.widgets.files import FileChunkedUpload
-
+from django.contrib.auth.models import Permission
 
 class ExampleForm(GTForm):
     photo_record = forms.FileField(label='Your photo',
@@ -162,3 +162,6 @@ def add_view_select(request):
         """
     }
     return JsonResponse(data)
+
+
+
